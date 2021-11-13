@@ -21,28 +21,27 @@ object BeerApiClient {
 
 interface BeerServiceApi{
     @GET("beers")
-    fun getData() : Call<BeerResponse>
+    fun getData() : Call<List<Beer>>
 
 
 }
 
 class BeersNetworkProvider {
     val TAG = "BeersNetworkProvider"
-    suspend fun provide(){
+    suspend fun provide():List<Beer>?{
         val call = BeerApiClient.apiClient.getData()
-        call.enqueue(object: Callback<BeerResponse>{
-            override fun onResponse(call: Call<BeerResponse>, response: Response<BeerResponse>) {
-                val beers = response.body()!!.results
-                beers.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
+        var beers:List<Beer>?=null
+        call.enqueue(object: Callback<List<Beer>>{
+            override fun onResponse(call: Call<List<Beer>>, response: Response<List<Beer>>) {
+                beers = response.body()!!
+                beers!!.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
             }
 
-            override fun onFailure(call: Call<BeerResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<Beer>>, t: Throwable) {
                 Log.e(TAG,t.toString())
             }
         })
-        //Log.e(TAG,"provide method starts")
-        //дергаем метод интерфейса
-        //возвращает лист дата класса
+        return beers
     }
 
 }
