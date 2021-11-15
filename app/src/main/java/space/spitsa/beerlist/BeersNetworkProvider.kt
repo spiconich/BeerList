@@ -1,10 +1,9 @@
 package space.spitsa.beerlist
 
 import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
@@ -28,20 +27,36 @@ interface BeerServiceApi{
 
 class BeersNetworkProvider {
     val TAG = "BeersNetworkProvider"
-    suspend fun provide():List<Beer>?{
+    suspend fun provide()= withContext(Dispatchers.IO){
         val call = BeerApiClient.apiClient.getData()
         var beers:List<Beer>?=null
-        call.enqueue(object: Callback<List<Beer>>{
-            override fun onResponse(call: Call<List<Beer>>, response: Response<List<Beer>>) {
+        try {
+            val response = call.awaitResponse()
+            if (!response.isSuccessful){
+                Log.e(TAG,"response is not successful")
+            }
+            else
+            {
                 beers = response.body()!!
+                Log.e(TAG,response.body().toString())
                 beers!!.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
             }
+        } catch (t:Throwable){
+            Log.e(TAG,t.toString())
+        }
+        beers
+        //call.execute(object: Callback<List<Beer>>{
+        //    override fun onResponse(call: Call<List<Beer>>, response: Response<List<Beer>>) {
+        //        beers = response.body()!!
+        //        beers!!.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
+        //    }
+        //
+        //    override fun onFailure(call: Call<List<Beer>>, t: Throwable) {
+        //        Log.e(TAG,t.toString())
+        //    }
+        //})
 
-            override fun onFailure(call: Call<List<Beer>>, t: Throwable) {
-                Log.e(TAG,t.toString())
-            }
-        })
-        return beers
+
     }
 
 }

@@ -1,5 +1,6 @@
 package space.spitsa.beerlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ class BeerAdapter(
     private val beers: List<Beer>,
     private val rowLayout: Int
 ) : RecyclerView.Adapter<BeerAdapter.BeerViewHolder>() {
+    private val TAG="BeerAdapter"
     class BeerViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var description: TextView = v.findViewById(R.id.beer_list_item_description)
         internal var name: TextView = v.findViewById(R.id.beer_list_item_name)
@@ -25,6 +27,8 @@ class BeerAdapter(
         val current = beers[position]
         holder.name.text=current.name
         holder.description.text=current.description
+        Log.e(TAG,current.name!!)
+
         //TODO: выкачать изображение и установить его
     }
 
