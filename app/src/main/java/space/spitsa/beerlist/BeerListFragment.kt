@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -34,12 +37,18 @@ class BeerListFragment : Fragment() {
 
 
         //здесь будем стратовать запрос в сеть а после - передавать полученные данные в адаптер
-        GlobalScope.launch {
+        lifecycleScope.launch {
             //
             val beersAnswer = BeersNetworkProvider()
             val beerList = beersAnswer.provide()
             if (beerList != null) {
                 recyclerView!!.adapter = BeerAdapter(beerList, R.layout.beer_list_item)
+                val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmer_view_container)
+                shimmer.stopShimmer()
+                shimmer.hideShimmer()
+                recyclerView.visibility=View.VISIBLE
+
+
             } else
                 Log.e(TAG, "beer list is empty")
 

@@ -45,18 +45,6 @@ class BeersNetworkProvider {
             Log.e(TAG,t.toString())
         }
         beers
-        //call.execute(object: Callback<List<Beer>>{
-        //    override fun onResponse(call: Call<List<Beer>>, response: Response<List<Beer>>) {
-        //        beers = response.body()!!
-        //        beers!!.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
-        //    }
-        //
-        //    override fun onFailure(call: Call<List<Beer>>, t: Throwable) {
-        //        Log.e(TAG,t.toString())
-        //    }
-        //})
-
-
     }
 
 }

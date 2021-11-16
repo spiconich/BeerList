@@ -4,8 +4,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.ShimmerFrameLayout
+import com.squareup.picasso.Picasso
 
 class BeerAdapter(
     private val beers: List<Beer>,
@@ -15,7 +18,8 @@ class BeerAdapter(
     class BeerViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var description: TextView = v.findViewById(R.id.beer_list_item_description)
         internal var name: TextView = v.findViewById(R.id.beer_list_item_name)
-        internal var image: TextView = v.findViewById(R.id.beer_list_item_image)
+        internal var image: ImageView = v.findViewById(R.id.beer_list_item_image)
+        internal var shimmer: ShimmerFrameLayout = v.findViewById(R.id.beer_list_item_shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder {
@@ -28,8 +32,14 @@ class BeerAdapter(
         holder.name.text=current.name
         holder.description.text=current.description
         Log.e(TAG,current.name!!)
-
         //TODO: выкачать изображение и установить его
+        Picasso.with(holder.name.context)
+            .load(current.imageUrl)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_launcher_foreground)
+            .into(holder.image)
+        holder.shimmer.stopShimmer()
+        holder.shimmer.hideShimmer()
     }
 
     override fun getItemCount(): Int {
