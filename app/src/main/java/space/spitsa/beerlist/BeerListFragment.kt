@@ -43,9 +43,10 @@ class BeerListFragment : Fragment() {
             val beerList = beersAnswer.provide()
             if (beerList != null) {
                 recyclerView!!.adapter = BeerAdapter(beerList, R.layout.beer_list_item)
-                val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmer_view_container)
+                val shimmer = view.findViewById<ShimmerFrameLayout>(R.id.shimmer_list_container)
                 shimmer.stopShimmer()
                 shimmer.hideShimmer()
+                shimmer.visibility=View.GONE
                 recyclerView.visibility=View.VISIBLE
 
 

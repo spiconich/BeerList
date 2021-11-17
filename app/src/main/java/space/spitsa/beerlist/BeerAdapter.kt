@@ -19,7 +19,6 @@ class BeerAdapter(
         internal var description: TextView = v.findViewById(R.id.beer_list_item_description)
         internal var name: TextView = v.findViewById(R.id.beer_list_item_name)
         internal var image: ImageView = v.findViewById(R.id.beer_list_item_image)
-        internal var shimmer: ShimmerFrameLayout = v.findViewById(R.id.beer_list_item_shimmer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerViewHolder {
@@ -38,8 +37,6 @@ class BeerAdapter(
             .placeholder(R.drawable.ic_launcher_foreground)
             .error(R.drawable.ic_launcher_foreground)
             .into(holder.image)
-        holder.shimmer.stopShimmer()
-        holder.shimmer.hideShimmer()
     }
 
     override fun getItemCount(): Int {
