@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Picasso
 
+interface MyInterface {
+    fun onClick(beer: Beer)
+}
 class BeerAdapter(
+    private val listener: MyInterface,
     private val beers: List<Beer>,
     private val rowLayout: Int
 ) : RecyclerView.Adapter<BeerAdapter.BeerViewHolder>() {
@@ -30,6 +34,9 @@ class BeerAdapter(
         val current = beers[position]
         holder.name.text=current.name
         holder.description.text=current.description
+        holder.itemView.setOnClickListener {
+            listener.onClick(current)
+        }
         Log.e(TAG,current.name!!)
         //TODO: выкачать изображение и установить его
         Picasso.with(holder.name.context)
