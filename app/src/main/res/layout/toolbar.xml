@@ -19,5 +19,4 @@
         android:textStyle="bold"
         android:gravity="center"/>
 
-
 </Toolbar>

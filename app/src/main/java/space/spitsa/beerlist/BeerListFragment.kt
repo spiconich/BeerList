@@ -1,12 +1,14 @@
 package space.spitsa.beerlist
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,27 +16,41 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
-class BeerListFragment : MyInterface,Fragment() {
+
+class BeerListFragment : MyInterface,ClickedImageInterface,Fragment() {
     private val TAG = "BeerListFragment"
     private var beerList:List<Beer>?=null
     lateinit var mContext: Context
+    private var clickedImage:Drawable?=null
 
     @Override
-    override fun onClick(beer:Beer){
+    override fun getImage(): Drawable? {
+         //TODO:drawable
+        return clickedImage
+    }
+    @Override
+    override fun onClick(beer:Beer, image:Drawable?){
         Log.e("interface", beer.name!!)
         val bundle = Bundle()
-        bundle.putInt("id",beer.id!!)
-        bundle.putString("name",beer.name)
-        bundle.putString("tagline",beer.tagline!!)
-        bundle.putString("firstBrewed",beer.firstBrewed!!)
-        bundle.putString("description",beer.description!!)
-        bundle.putString("imageUrl",beer.imageUrl!!)
-        bundle.putFloat("abv",beer.abv!!)
-        bundle.putFloat("ibu",beer.ibu!!)
+        try {
+            bundle.putInt("id",beer.id!!)
+            bundle.putString("name",beer.name)
+            bundle.putString("tagline",beer.tagline!!)
+            bundle.putString("firstBrewed",beer.firstBrewed!!)
+            bundle.putString("description",beer.description!!)
+            bundle.putString("imageUrl",beer.imageUrl!!)
+            bundle.putFloat("abv",beer.abv!!)
+            bundle.putFloat("ibu",beer.ibu!!)
+        } catch (e:Exception){
+            Log.e("interface","Some row was empty")
+        }
+
+        clickedImage=image //TODO: приемлимо?
         val manager = (mContext as FragmentActivity).supportFragmentManager
         val transaction = manager.beginTransaction()
-        val beerDetailFragment = BeerDetailFragment()
+        val beerDetailFragment = BeerDetailFragment(this@BeerListFragment)
         beerDetailFragment.arguments = bundle
         transaction.replace(R.id.list_fragment, beerDetailFragment)
         transaction.addToBackStack(beerDetailFragment::class.java.name);

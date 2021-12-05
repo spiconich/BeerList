@@ -1,5 +1,6 @@
 package space.spitsa.beerlist
 
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Picasso
 
 interface MyInterface {
-    fun onClick(beer: Beer)
+    fun onClick(beer: Beer, image:Drawable?)
 }
 class BeerAdapter(
     private val listener: MyInterface,
@@ -35,7 +36,13 @@ class BeerAdapter(
         holder.name.text=current.name
         holder.description.text=current.description
         holder.itemView.setOnClickListener {
-            listener.onClick(current)
+            if (holder.image.drawable==null){
+                listener.onClick(current,null)
+            }
+            else{
+                listener.onClick(current,holder.image.drawable)
+            }
+
         }
         Log.e(TAG,current.name!!)
         //TODO: выкачать изображение и установить его
