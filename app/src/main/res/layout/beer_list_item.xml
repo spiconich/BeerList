@@ -8,6 +8,8 @@
     android:minHeight="90dp"
     android:orientation="horizontal"
     android:padding="10dp">
+
+    <!-- Вместо marginLeft, marginRight лучше юзать marginStart, marginEnd-->
     <ImageView
         android:id="@+id/beer_list_item_image"
         android:layout_width="0dp"
@@ -15,7 +17,6 @@
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:src="@drawable/ic_launcher_background" />
-
 
     <LinearLayout
         android:layout_weight="4"

@@ -3,6 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tagline">Таглайн: </string>
+    <string name="tagline_renat_fixes">Таглайн: %s</string>
     <string name="firstBrewed">Произведен впервые: </string>
     <string name="id">Идентификатор: </string>
 </resources>

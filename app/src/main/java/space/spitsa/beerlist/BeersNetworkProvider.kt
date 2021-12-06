@@ -9,7 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 object BeerApiClient {
+
     private const val BASE_URL = "https://api.punkapi.com/v2/"
+
     val apiClient: BeerServiceApi by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -20,32 +22,39 @@ object BeerApiClient {
 }
 
 interface BeerServiceApi{
+
     @GET("beers")
-    fun getData() : Call<List<Beer>>
-
-
+    fun getData(): Call<List<Beer>>
 }
 
 class BeersNetworkProvider {
+
     val TAG = "BeersNetworkProvider"
-    suspend fun provide()= withContext(Dispatchers.IO){
+
+    suspend fun provide() = withContext(Dispatchers.IO) {
+
         val call = BeerApiClient.apiClient.getData()
-        var beers:List<Beer>?=null
+        var beers: List<Beer>? = null
         try {
+
             val response = call.awaitResponse()
-            if (!response.isSuccessful){
+            /**
+             * .not() заметишь с большей вероятностью, чем ! перед логическим выражением
+             */
+            if (response.isSuccessful.not()){
                 Log.e(TAG,"response is not successful")
             }
             else
             {
                 beers = response.body()!!
-                Log.e(TAG,response.body().toString())
-                beers!!.forEach{beer -> Log.e(TAG,beer.name.orEmpty())}
+                Log.e(TAG, response.body().toString())
+                beers.forEach { beer -> Log.e(TAG, beer.name.orEmpty()) }
             }
-        } catch (t:Throwable){
+        } catch (t:Throwable) {
+
             Log.e(TAG,t.toString())
         }
+
         beers
     }
-
 }

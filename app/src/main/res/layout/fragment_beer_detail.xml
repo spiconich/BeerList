@@ -4,8 +4,12 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
+
+    <!-- Чтобы был автоотступ снизу, надо в разметке toolbar указать marginBottom -->
+    <!-- Еще существует padding, можно с ним сделать-->
     <include layout="@layout/toolbar"/>
     <!--TODO: как реализовать автоотступ снизу в toolbar -->
+
     <LinearLayout
         android:id="@+id/beer_list_item"
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <!-- Размер текста надо в sp, чтобы масштабирование было -->
             <TextView
                 android:id="@+id/beer_list_detail_description"
                 android:layout_width="match_parent"

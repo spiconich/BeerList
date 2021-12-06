@@ -12,15 +12,21 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Picasso
 
 interface MyInterface {
+
     fun onClick(beer: Beer, image:Drawable?)
 }
 class BeerAdapter(
+
     private val listener: MyInterface,
     private val beers: List<Beer>,
     private val rowLayout: Int
+
 ) : RecyclerView.Adapter<BeerAdapter.BeerViewHolder>() {
+
     private val TAG="BeerAdapter"
+
     class BeerViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+
         internal var description: TextView = v.findViewById(R.id.beer_list_item_description)
         internal var name: TextView = v.findViewById(R.id.beer_list_item_name)
         internal var image: ImageView = v.findViewById(R.id.beer_list_item_image)
@@ -32,10 +38,18 @@ class BeerAdapter(
     }
 
     override fun onBindViewHolder(holder: BeerViewHolder, position: Int) {
+
         val current = beers[position]
-        holder.name.text=current.name
-        holder.description.text=current.description
+
+        holder.name.text = current.name
+        holder.description.text = current.description
         holder.itemView.setOnClickListener {
+
+            /**
+             * Если holder.image.drawable is null, тогда в любом случае вторым аргументом будет null
+             *
+             * Можно убрать условие и оставить только listener.onClick(current,holder.image.drawable)
+             */
             if (holder.image.drawable==null){
                 listener.onClick(current,null)
             }
@@ -44,7 +58,13 @@ class BeerAdapter(
             }
 
         }
-        Log.e(TAG,current.name!!)
+
+        /**
+         * Используем оператор небезопасного вызова в крайних случаях,
+         * как можно реже, чтобы не получить краш
+         */
+        Log.e(TAG,current.name.orEmpty())
+
         //TODO: выкачать изображение и установить его
         Picasso.with(holder.name.context)
             .load(current.imageUrl)
@@ -53,8 +73,6 @@ class BeerAdapter(
             .into(holder.image)
     }
 
-    override fun getItemCount(): Int {
-        return beers.size
-    }
+    override fun getItemCount(): Int = beers.size
 }
 
