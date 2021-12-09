@@ -46,7 +46,7 @@ class BeerDetailFragment(private val imageListener: ClickedImageInterface): Frag
         val taglineTV = view.findViewById<TextView>(R.id.beer_list_detail_tagline)
         val firstBrewedTV = view.findViewById<TextView>(R.id.beer_list_detail_firstBrewed)
         val idTV = view.findViewById<TextView>(R.id.beer_list_detail_id)
-        val toolbarTV = view.findViewById<TextView>(R.id.toolbar_text)
+        val toolbarV = view.findViewById<Toolbar>(R.id.toolbar_layout)
         val ibuTV=view.findViewById<TextView>(R.id.beer_list_detail_ibu)
         val abvTV=view.findViewById<TextView>(R.id.beer_list_detail_abv)
         val imageV=view.findViewById<ImageView>(R.id.beer_list_detail_image)
@@ -68,7 +68,7 @@ class BeerDetailFragment(private val imageListener: ClickedImageInterface): Frag
         taglineTV.text = getResources().getString(R.string.tagline)+" "+tagline;
         firstBrewedTV.text = getResources().getString(R.string.firstBrewed)+" "+firstBrewed
         idTV.text = getResources().getString(R.string.id)+" "+id.toString()
-        toolbarTV.text = name
+        toolbarV.title = name //TODO:set beer title
         ibuTV.text="Ibu: "+ibu.toString()
         abvTV.text="Abv: "+abv.toString()
     }

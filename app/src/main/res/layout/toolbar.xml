@@ -7,16 +7,10 @@
     android:background="#B31E1E"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:title="Toolbar"
+    android:titleTextColor="@color/white"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <TextView
-        android:id="@+id/toolbar_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Toolbar"
-        android:textColor="#FFF"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+    
 
 </Toolbar>
