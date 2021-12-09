@@ -7,10 +7,10 @@
     android:background="#B31E1E"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    android:title="Toolbar"
+    android:title="@string/beer_list"
     android:titleTextColor="@color/white"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    
+
 
 </Toolbar>

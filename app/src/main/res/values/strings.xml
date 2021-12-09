@@ -5,4 +5,5 @@
     <string name="tagline">Таглайн: </string>
     <string name="firstBrewed">Произведен впервые: </string>
     <string name="id">Идентификатор: </string>
+    <string name="beer_list">Список пивка</string>
 </resources>
